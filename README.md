@@ -1,5 +1,10 @@
 # 🎯 AI 面试陪练（Mock Interview Coach）
 
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![SQLite](https://img.shields.io/badge/SQLite-local-003B57?logo=sqlite&logoColor=white)](https://sqlite.org)
+[![Demo](https://img.shields.io/badge/demo-one--click-28a745)](#一键演示)
+
 > 模拟面试 → 逐题结构化点评 → 五维能力画像 → 训练计划 → 越练越强。
 >
 > 一个基于 Flask + SQLite 的本地模拟面试 Web 应用：**大模型优先 + 离线规则兜底**双引擎设计，
