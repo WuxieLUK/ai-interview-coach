@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}历史记录 · AI 面试陪练{% endblock %}
+{% block page %}history{% endblock %}
+
+{% block content %}
+<div class="shell wrap">
+  <header class="page-head">
+    <span class="eyebrow reveal">Archive</span>
+    <h1 class="reveal" style="--d:50ms;margin-top:1rem">历史记录</h1>
+    <p class="lede reveal" style="--d:100ms">每一场练习都留档，随时回看当时的回答与点评。</p>
+  </header>
+
+  <section class="panel panel--flush reveal" style="--d:140ms">
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>目标岗位</th>
+            <th class="hide-sm">方向</th>
+            <th>状态</th>
+            <th>得分</th>
+            <th style="text-align:right">操作</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="6"><div class="skeleton" style="padding:1rem"><i style="width:100%"></i><i style="width:80%"></i><i style="width:60%"></i></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+{% endblock %}

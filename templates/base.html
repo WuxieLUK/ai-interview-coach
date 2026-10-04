@@ -1,0 +1,60 @@
+{% import "_icons.html" as ui %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e0e13">
+<title>{% block title %}AI 面试陪练{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='fonts/noto-serif-sc.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='fonts/inter.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='fonts/jetbrains-mono.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='fonts/instrument-serif.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>document.documentElement.classList.add("js");</script>
+{% block head %}{% endblock %}
+</head>
+<body data-page="{% block page %}{% endblock %}">
+<div class="grain" aria-hidden="true"></div>
+
+{% set ep = request.endpoint or '' %}
+{% block nav %}
+<nav class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="{{ url_for('main.dashboard') }}">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">AI 面试陪练</span>
+    </a>
+    <div class="nav__links">
+      <a class="nav__link {{ 'is-active' if ep == 'main.dashboard' }}" href="{{ url_for('main.dashboard') }}">开始面试</a>
+      <a class="nav__link nav__hide-sm {{ 'is-active' if ep == 'main.history_page' }}" href="{{ url_for('main.history_page') }}">历史记录</a>
+      <a class="nav__link nav__hide-sm {{ 'is-active' if ep == 'main.insights_page' }}" href="{{ url_for('main.insights_page') }}">能力洞察</a>
+      <form class="nav__form" method="post" action="{{ url_for('main.logout') }}">
+        <button class="linkbtn nav__hide-sm" type="submit">退出</button>
+      </form>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+<main>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}<div class="wrap" style="padding-top:1.5rem"><div class="notice notice--gold"><span class="notice__dot"></span>{{ messages[0] }}</div></div>{% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+
+{% block footer %}
+<div class="wrap">
+  <footer class="site-foot">
+    <span>AI 面试陪练 · 大模型优先 + 离线规则兜底</span>
+    <span class="mono">LOCAL · NO CDN</span>
+  </footer>
+</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

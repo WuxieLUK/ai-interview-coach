@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}注册 · AI 面试陪练{% endblock %}
+{% block page %}auth{% endblock %}
+
+{% block nav %}
+<nav class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="/"><span class="brand__mark" aria-hidden="true"></span><span class="brand__name">AI 面试陪练</span></a>
+    <div class="nav__links"><a class="nav__link" href="/">返回首页</a></div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="auth">
+  <aside class="auth__aside">
+    <span class="eyebrow">Get started</span>
+    <div>
+      <p class="auth__quote">面试没有彩排，<br>但你可以<em>先练一次</em>。</p>
+      <ul class="auth__list">
+        <li>{{ ui.icon("check", 14) }}<span>注册即用，无需邮箱验证</span></li>
+        <li>{{ ui.icon("check", 14) }}<span>报告与能力雷达自动累积</span></li>
+        <li>{{ ui.icon("check", 14) }}<span>不配置 API Key 也能完整使用</span></li>
+      </ul>
+    </div>
+    <span class="mono muted">MOCK INTERVIEW COACH</span>
+  </aside>
+
+  <section class="auth__main">
+    <div class="auth__form">
+      <span class="eyebrow">Create account</span>
+      <h1 style="margin:1rem 0 0.5rem">注册账号</h1>
+      <p class="muted small" style="margin:0 0 2rem">30 秒创建，立刻开始模拟面试。</p>
+
+      {% if error %}<div class="notice notice--error" style="margin-bottom:1.25rem"><span class="notice__dot"></span>{{ error }}</div>{% endif %}
+
+      <form method="post" class="form-stack">
+        <div class="field">
+          <label for="username">用户名</label>
+          <input class="input" id="username" name="username" required minlength="2" autocomplete="username" autofocus>
+        </div>
+        <div class="field">
+          <label for="password">密码</label>
+          <input class="input" id="password" type="password" name="password" required minlength="6" autocomplete="new-password">
+          <span class="field__hint">至少 6 位字符</span>
+        </div>
+        <button class="btn btn--primary btn--block btn--lg" type="submit">
+          注册并登录 {{ ui.icon("arrow-right", 17, "btn__arrow") }}
+        </button>
+      </form>
+
+      <p class="auth__swap">已有账号？<a href="{{ url_for('main.login') }}">去登录</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

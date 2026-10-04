@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}开始面试 · AI 面试陪练{% endblock %}
+{% block page %}dashboard{% endblock %}
+
+{% block content %}
+<div class="shell wrap">
+  <header class="page-head">
+    <span class="eyebrow reveal">Step 01 / 04</span>
+    <h1 class="reveal" style="--d:50ms;margin-top:1rem">建立你的岗位档案</h1>
+    <p class="lede reveal" style="--d:100ms">
+      填得越具体，题目和点评就越贴近真实的你。这些信息不会离开本机。
+    </p>
+  </header>
+
+  <div class="split">
+    <section class="panel reveal" style="--d:140ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("target", 16) }}目标岗位信息</span>
+        <span class="badge badge--muted" id="save-tip">未保存</span>
+      </div>
+
+      <div class="form-stack">
+        <div class="field">
+          <label for="pf-name">你的称呼</label>
+          <input class="input" id="pf-name" placeholder="如：小李">
+        </div>
+        <div class="field">
+          <label for="pf-job">目标岗位</label>
+          <input class="input" id="pf-job" placeholder="如：后端开发工程师 / 产品经理">
+        </div>
+        <div class="field">
+          <label for="pf-level">求职阶段</label>
+          <select class="select" id="pf-level">
+            <option value="实习">实习</option>
+            <option value="校招" selected>校招</option>
+            <option value="社招">社招</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pf-exp">技能 / 经历简介</label>
+          <textarea class="textarea" id="pf-exp" rows="4" placeholder="例如：熟悉 Python / Flask，做过校园二手交易平台项目，负责后端接口与数据库优化…"></textarea>
+          <span class="field__hint">可选，但写下来会让点评更具体</span>
+        </div>
+        <button class="btn btn--block" id="save-profile" type="button">保存信息</button>
+      </div>
+    </section>
+
+    <section class="panel reveal" style="--d:200ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("layers", 16) }}选择面试方向</span>
+        <span class="badge badge--gold mono">每场 5 题</span>
+      </div>
+
+      <div class="picker" id="jobGrid">
+        {% for j in jobs %}
+        <button class="pick" type="button" data-family="{{ j.key }}">
+          <b>{{ j.name }}</b>
+          <span>{{ j.desc }}</span>
+        </button>
+        {% endfor %}
+      </div>
+
+      <p class="small muted" style="margin:1.25rem 0 1.5rem">
+        组卷节奏：破冰自我介绍 → 岗位基础 → 行为故事 → 岗位进阶 → 综合情景，难度逐步升级。
+      </p>
+
+      {% if ai_on %}
+      <div class="notice notice--gold" style="margin-bottom:1.25rem"><span class="notice__dot"></span>大模型已配置，将输出 AI 深度点评。</div>
+      {% else %}
+      <div class="notice" style="margin-bottom:1.25rem"><span class="notice__dot"></span>未配置 API Key，使用离线规则点评——功能完整可用。</div>
+      {% endif %}
+
+      <button class="btn btn--primary btn--block btn--lg" id="start-btn" type="button" disabled>
+        开始面试 {{ ui.icon("arrow-right", 17, "btn__arrow") }}
+      </button>
+    </section>
+  </div>
+</div>
+{% endblock %}

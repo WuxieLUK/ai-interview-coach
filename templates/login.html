@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}登录 · AI 面试陪练{% endblock %}
+{% block page %}auth{% endblock %}
+
+{% block nav %}
+<nav class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="/"><span class="brand__mark" aria-hidden="true"></span><span class="brand__name">AI 面试陪练</span></a>
+    <div class="nav__links"><a class="nav__link" href="/">返回首页</a></div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="auth">
+  <aside class="auth__aside">
+    <span class="eyebrow">Welcome back</span>
+    <div>
+      <p class="auth__quote">每一次开口，<br>都值得被<em>认真点评</em>。</p>
+      <ul class="auth__list">
+        <li>{{ ui.icon("check", 14) }}<span>5 大方向 · 44 道内置面试题</span></li>
+        <li>{{ ui.icon("check", 14) }}<span>即时点评 + 五维能力拆解</span></li>
+        <li>{{ ui.icon("check", 14) }}<span>数据仅存本地，无需邮箱</span></li>
+      </ul>
+    </div>
+    <span class="mono muted">MOCK INTERVIEW COACH</span>
+  </aside>
+
+  <section class="auth__main">
+    <div class="auth__form">
+      <span class="eyebrow">Sign in</span>
+      <h1 style="margin:1rem 0 0.5rem">登录账号</h1>
+      <p class="muted small" style="margin:0 0 2rem">继续你的面试练习。</p>
+
+      {% if error %}<div class="notice notice--error" style="margin-bottom:1.25rem"><span class="notice__dot"></span>{{ error }}</div>{% endif %}
+
+      <form method="post" class="form-stack">
+        <div class="field">
+          <label for="username">用户名</label>
+          <input class="input" id="username" name="username" required autocomplete="username" autofocus>
+        </div>
+        <div class="field">
+          <label for="password">密码</label>
+          <input class="input" id="password" type="password" name="password" required autocomplete="current-password">
+        </div>
+        <button class="btn btn--primary btn--block btn--lg" type="submit">
+          登录 {{ ui.icon("arrow-right", 17, "btn__arrow") }}
+        </button>
+      </form>
+
+      <a class="btn btn--block" href="{{ url_for('main.demo_login') }}" style="margin-top:1.25rem">直接进入演示账号 {{ ui.icon("arrow-right", 16, "btn__arrow") }}</a>
+      <p class="muted small" style="margin:.8rem 0 0">演示账号 demo / demo123 · 已内置多场面试记录</p>
+
+      <p class="auth__swap">还没有账号？<a href="{{ url_for('main.register') }}">去注册</a></p>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

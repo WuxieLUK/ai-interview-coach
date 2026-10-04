@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}能力洞察 · AI 面试陪练{% endblock %}
+{% block page %}insights{% endblock %}
+
+{% block content %}
+<div class="shell wrap">
+  <header class="page-head">
+    <span class="eyebrow reveal">Insights</span>
+    <h1 class="reveal" style="--d:50ms;margin-top:1rem">能力洞察</h1>
+    <p class="lede reveal" style="--d:100ms">把每场面试的分数聚合成一张能力画像，看清强项、短板与成长曲线。</p>
+  </header>
+
+  <div class="split">
+    <section class="panel reveal" style="--d:140ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("chart", 16) }}五维能力雷达</span>
+        <span class="badge badge--muted mono">0 – 100</span>
+      </div>
+      <div class="chart" id="radar"></div>
+    </section>
+
+    <section class="panel reveal" style="--d:200ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("target", 16) }}整体数据</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span class="n num" id="kpiCount">–</span><span class="l">已完成面试</span></div>
+        <div class="kpi"><span class="n num" id="kpiAvg">–</span><span class="l">平均得分</span></div>
+        <div class="kpi"><span class="n num" id="kpiTrend">–</span><span class="l">最近趋势</span></div>
+      </div>
+      <p class="soft small" id="insightTip" style="margin:1.75rem 0 1.5rem">
+        完成至少一场面试后，这里会生成你的能力画像。
+      </p>
+      <a class="btn btn--primary" href="{{ url_for('main.dashboard') }}">再去练一场 {{ ui.icon("arrow-right", 16, "btn__arrow") }}</a>
+    </section>
+  </div>
+
+  <div class="split" style="margin-top:1.25rem">
+    <section class="panel reveal" style="--d:220ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("layers", 16) }}强项与短板</span>
+      </div>
+      <div class="form-stack">
+        <div class="field">
+          <label for="strengthList" class="field__label">强项维度</label>
+          <ul class="tiplist" id="strengthList" style="margin-top:.4rem"><li class="muted">暂无数据</li></ul>
+        </div>
+        <div class="field">
+          <label for="weaknessList" class="field__label">待提升维度</label>
+          <ul class="tiplist" id="weaknessList" style="margin-top:.4rem"><li class="muted">暂无数据</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel reveal" style="--d:260ms">
+      <div class="panel__head">
+        <span class="panel__title">{{ ui.icon("spark", 16) }}成长建议</span>
+      </div>
+      <ol class="tiplist" id="planList" style="margin-top:.4rem"><li class="muted">完成更多面试后，这里会给出针对性训练计划。</li></ol>
+    </section>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% import "_icons.html" as ui %}
+{% block title %}AI 面试陪练 · 面试没有彩排，但你可以先练一次{% endblock %}
+{% block page %}landing{% endblock %}
+
+{% block nav %}
+<nav class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="/">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">AI 面试陪练</span>
+    </a>
+    <div class="nav__links">
+      <a class="nav__link nav__hide-sm" href="#how">练习流程</a>
+      <a class="nav__link nav__hide-sm" href="#dims">能力模型</a>
+      <a class="nav__link" href="{{ url_for('main.login') }}">登录</a>
+      <a class="btn btn--primary btn--sm" href="{{ url_for('main.register') }}">开始练习</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero__light" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">AI Mock Interview</span>
+    <div class="hero__head">
+      <h1 class="display reveal" style="--d:60ms">面试没有彩排，<br>但你可以<em>先练一次</em>。</h1>
+      <ol class="hero__index reveal" style="--d:160ms">
+        <li><span>01</span>岗位档案</li>
+        <li><span>02</span>智能组卷</li>
+        <li><span>03</span>即时点评</li>
+        <li><span>04</span>复盘成长</li>
+      </ol>
+    </div>
+    <div class="hero__lower">
+    <div class="hero__copy">
+      <p class="lede reveal" style="--d:140ms">
+        选定目标岗位，系统生成 5 道针对性问题。逐题作答，即时拿到分数、五维能力点评与改进建议。
+        大模型优先、离线规则兜底——<strong style="color:var(--paper);font-weight:600">不配置任何 API Key 也能完整跑通</strong>。
+      </p>
+      <div class="cta-row reveal" style="--d:220ms">
+        <a class="btn btn--primary btn--lg" href="{{ url_for('main.register') }}">
+          开始免费练习 {{ ui.icon("arrow-right", 17, "btn__arrow") }}
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#how">看看怎么练</a>
+      </div>
+      <div class="hero__meta reveal" style="--d:300ms">
+        <span>5 大岗位方向</span>
+        <span>38+ 道真题</span>
+        <span>五维能力画像</span>
+        <span>本地运行 · 零依赖</span>
+      </div>
+    </div>
+
+    <div class="hero__visual reveal" style="--d:180ms">
+      <div class="stage">
+        <div class="stage__halo" aria-hidden="true"></div>
+        <div class="stage__card">
+          <div class="stage__top">
+            <span class="stage__tag" id="stageTag">技术开发</span>
+            <span class="stage__idx" id="stageIdx">01 / 05</span>
+          </div>
+          <p class="stage__q" id="stageQ">请讲一个你遇到的最有挑战的技术项目，你扮演什么角色，最后怎么解决的？</p>
+          <div class="stage__answer" id="stageA"></div>
+          <div class="stage__foot">
+            <svg class="dial" viewBox="0 0 80 80" aria-hidden="true">
+              <circle class="dial__track" cx="40" cy="40" r="34" fill="none" stroke-width="5"/>
+              <circle class="dial__value" id="stageDial" cx="40" cy="40" r="34" fill="none" stroke-width="5"
+                      stroke-dasharray="213.6" stroke-dashoffset="213.6" transform="rotate(-90 40 40)"/>
+              <text class="dial__text" id="stageScore" x="40" y="46" text-anchor="middle">0</text>
+            </svg>
+            <div class="stage__verdict">
+              <span class="stage__verdictLabel">即时点评</span>
+              <div class="stage__dims" id="stageDims"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker reveal" aria-hidden="true">
+  <div class="ticker__track">
+    {% for _ in range(2) %}
+    <span class="ticker__item">自我介绍</span>
+    <span class="ticker__item">STAR 结构</span>
+    <span class="ticker__item">行为面试</span>
+    <span class="ticker__item">情景应变</span>
+    <span class="ticker__item">项目复盘</span>
+    <span class="ticker__item">压力面</span>
+    <span class="ticker__item">技术深挖</span>
+    <span class="ticker__item">反问环节</span>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ============ STEPS ============ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow reveal">练习流程</span>
+        <h2 class="h1 reveal" style="--d:60ms">四步，走完一圈<em class="serif" style="font-style:italic;color:var(--gold-2)">真实面试</em>。</h2>
+      </div>
+      <p class="lede reveal" style="--d:120ms">
+        从建档到复盘形成闭环。每一题都会告诉你「哪里做得好」和「下一句该怎么说」，
+        而不是只给一个冷冰冰的分数。
+      </p>
+    </div>
+
+    <div class="steps">
+      {% set steps = [
+        ("01", "建立岗位档案", "填写目标岗位、求职阶段与技能经历。这些信息会作为出题与点评的上下文，让问题真正围绕「你」展开。"),
+        ("02", "生成专属题库", "按方向智能组卷：2 道岗位专业题 + 2 道通用行为题 + 1 道综合情景题，覆盖技术深挖与软技能。"),
+        ("03", "逐题作答与点评", "写下你的回答，立刻获得得分、五维能力拆解、优点清单与改进建议，并附一份更好的回答示例。"),
+        ("04", "生成报告与画像", "一场结束，汇总总分与逐题回顾；多场累积成五维能力雷达，让弱项无处藏身。")
+      ] %}
+      {% for num, title, body in steps %}
+      <article class="step reveal" style="--d:{{ loop.index0 * 70 }}ms">
+        <div class="step__num">{{ num }}</div>
+        <h3 class="step__title">{{ title }}</h3>
+        <p class="step__body" style="margin:0">{{ body }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="section section--tight" id="features">
+  <div class="wrap">
+    <div class="sec-head sec-head--center">
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <span class="eyebrow reveal">产品能力</span>
+        <h2 class="h1 reveal" style="--d:60ms;max-width:22ch">能跑起来的产品，<br>而不是一个聊天壳子。</h2>
+      </div>
+    </div>
+
+    <div class="bento">
+      <article class="tile tile--wide reveal" data-tilt>
+        <div class="tile__icon">{{ ui.icon("spark", 17) }}</div>
+        <h3 class="h3">双引擎点评</h3>
+        <p>配置任意 OpenAI 兼容接口（默认 DeepSeek）时输出深度点评；未配置或调用失败时，自动回退到本地规则引擎——关键词覆盖、STAR 结构、回答长度与表达条理四维加权。功能永不中断。</p>
+      </article>
+
+      <article class="tile reveal" style="--d:70ms" data-tilt>
+        <span class="tile__kpi">38</span>
+        <h3 class="h3">道内置真题</h3>
+        <p>技术、产品、运营、数据分析、通用行为五大方向，每题都带参考要点。</p>
+      </article>
+
+      <article class="tile reveal" data-tilt>
+        <div class="tile__icon">{{ ui.icon("layers", 17) }}</div>
+        <h3 class="h3">五维能力模型</h3>
+        <p>专业能力、逻辑表达、沟通协作、应变能力、岗位匹配。</p>
+      </article>
+
+      <article class="tile reveal" style="--d:70ms" data-tilt>
+        <div class="tile__icon">{{ ui.icon("chart", 17) }}</div>
+        <h3 class="h3">能力雷达</h3>
+        <p>多场面试数据聚合，弱项随时间变化一目了然。</p>
+      </article>
+
+      <article class="tile reveal" style="--d:140ms" data-tilt>
+        <div class="tile__icon">{{ ui.icon("doc", 17) }}</div>
+        <h3 class="h3">可导出报告</h3>
+        <p>逐题回顾 + 改进建议，一键打印为 PDF 带走。</p>
+      </article>
+
+      <article class="tile tile--full reveal" data-tilt>
+        <div class="row" style="align-items:flex-start;gap:1.5rem;flex-wrap:wrap">
+          <div class="tile__icon" style="margin-bottom:0">{{ ui.icon("bolt", 17) }}</div>
+          <div style="flex:1;min-width:min(320px,100%)">
+            <h3 class="h3">零配置即可运行 · 本地优先</h3>
+            <p>Flask + SQLite，仅两个 Python 依赖。字体、图表库全部本地托管，无 CDN 依赖、无外网请求，克隆下来就能跑。</p>
+          </div>
+          <div class="kpi" style="text-align:right">
+            <span class="n" data-count="2">2</span>
+            <span class="l">个 pip 依赖</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIMENSIONS ============ -->
+<section class="section" id="dims">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow reveal">能力模型</span>
+        <h2 class="h1 reveal" style="--d:60ms">五个维度，<br>拆解一次回答。</h2>
+      </div>
+      <p class="lede reveal" style="--d:120ms">
+        每一次点评都会落到这五个维度上。分数不是终点——知道「哪一维拖了后腿」，
+        下一次练习才有方向。
+      </p>
+    </div>
+
+    <div class="dims">
+      {% set dims = [
+        ("专业能力", "岗位知识点的覆盖度与深度", 86),
+        ("逻辑表达", "分点作答、结构清晰、有始有终", 78),
+        ("沟通协作", "行为故事中的协作与推动力", 72),
+        ("应变能力", "情景题里的判断与抗压表达", 81),
+        ("岗位匹配", "回答与目标岗位的贴合程度", 74)
+      ] %}
+      {% for name, desc, val in dims %}
+      <article class="dim reveal" style="--d:{{ loop.index0 * 60 }}ms" data-meter="{{ val }}">
+        <span class="dim__idx">{{ "0" ~ loop.index }}</span>
+        <span class="dim__name">{{ name }}</span>
+        <p class="dim__desc" style="margin:0">{{ desc }}</p>
+        <div class="dim__bar"></div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS + CTA ============ -->
+<section class="section section--tight" id="stats">
+  <div class="wrap">
+    <div class="stats-band reveal">
+      <div class="stat-cell"><span class="n" data-count="5">5</span><span class="l">岗位方向</span></div>
+      <div class="stat-cell"><span class="n" data-count="38" data-suffix="+">38</span><span class="l">道内置面试题</span></div>
+      <div class="stat-cell"><span class="n" data-count="5">5</span><span class="l">维能力画像</span></div>
+    </div>
+
+    <div class="final reveal" style="margin-top:clamp(3rem,6vw,5rem)">
+      <span class="eyebrow">Ready when you are</span>
+      <h2 class="h1" style="margin:1rem auto 0;max-width:20ch">现在就来一场，三分钟拿到结果。</h2>
+      <p class="lede" style="margin:1.25rem auto 0;text-align:center">
+        注册只要一个用户名和密码，无需邮箱验证。你的数据只存在本地 SQLite 里。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn--primary btn--lg" href="{{ url_for('main.register') }}">
+          免费开始练习 {{ ui.icon("arrow-right", 17, "btn__arrow") }}
+        </a>
+        <a class="btn btn--ghost btn--lg" href="{{ url_for('main.login') }}">已有账号，直接登录</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+<div class="wrap">
+  <footer class="site-foot">
+    <span>AI 面试陪练 · 个人学习项目 · 与任何招聘平台无关</span>
+    <span class="mono">FLASK + SQLITE · LOCAL FIRST</span>
+  </footer>
+</div>
+{% endblock %}
